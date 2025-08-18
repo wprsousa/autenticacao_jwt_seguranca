@@ -1,4 +1,4 @@
-from src.controllers.interfaces.balnce_editor import BalanceEditorInterface
+from src.controllers.interfaces.balance_editor import BalanceEditorInterface
 from src.models.interface.user_repository import UserRepositoryInterface
 
 
