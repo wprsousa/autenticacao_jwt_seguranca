@@ -11,15 +11,17 @@ class BalanceEditorView(ViewInterface):
     def handle(self, http_request: HttpRequest) -> HttpResponse:
         new_balance = http_request.body.get("new_balance")
         user_id = http_request.params.get("user_id")
-        self.__validate_inputs(new_balance, user_id)
+        header_user_id = http_request.headers.get("uid")
+        self.__validate_inputs(new_balance, user_id, header_user_id)
 
         response = self.__controller.edit(user_id, new_balance)
         return HttpResponse(body={"data": response}, status_code=200)
 
     @staticmethod
-    def __validate_inputs(new_balance, user_id) -> None:
+    def __validate_inputs(new_balance, user_id, header_user_id) -> None:
         if (
                 not new_balance
                 or not user_id
                 or not isinstance(new_balance, float)
+                or int(user_id) != int(header_user_id)
         ): raise Exception("Invalid Input")
